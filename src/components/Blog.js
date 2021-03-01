@@ -43,7 +43,7 @@ const Blog = ({ blog, deleteHandler, likeHandler, loggedUser }) => {
 
   return (
     <div style={blogStyles}>
-      {author}: &ldquo;{title}&rdquo;
+      {author}: {title}
       <button onClick={() => setDetails(!details)}>
         {details ? "hide" : "view"}
       </button>
