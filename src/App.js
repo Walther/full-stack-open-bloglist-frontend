@@ -137,14 +137,16 @@ const App = () => {
     return (
       <>
         <h2>Blogs</h2>
-        {blogs.map((blog) => (
-          <Blog
-            key={blog.id}
-            blog={blog}
-            deleteHandler={() => deleteHandler(blog.id, blog.title)}
-            likeHandler={likeHandler}
-          />
-        ))}
+        {blogs
+          .sort((a, b) => b.likes - a.likes)
+          .map((blog) => (
+            <Blog
+              key={blog.id}
+              blog={blog}
+              deleteHandler={() => deleteHandler(blog.id, blog.title)}
+              likeHandler={likeHandler}
+            />
+          ))}
       </>
     );
   };
@@ -153,7 +155,6 @@ const App = () => {
     blogService
       .update(id, { user, author, title, url, likes })
       .then((response) => {
-        console.log(response);
         // Update local view too
         setBlogs(blogs.map((blog) => (blog.id !== id ? blog : response)));
       })
