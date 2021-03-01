@@ -38,8 +38,11 @@ const BlogForm = ({ submitBlog, blogFormRef }) => {
   return (
     <form onSubmit={addBlog}>
       Title: <input value={title} onChange={handleTitleChange} />
+      <br />
       Author: <input value={author} onChange={handleAuthorChange} />
+      <br />
       URL: <input value={url} onChange={handleUrlChange} />
+      <br />
       <button type="submit">save</button>
     </form>
   );
