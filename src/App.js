@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 import Blog from "./components/Blog";
 import BlogForm from "./components/BlogForm";
 import LoginForm from "./components/LoginForm";
 import LogOutForm from "./components/LogOutForm";
 import Notification from "./components/Notification";
+import Togglable from "./components/Togglable";
 
 import blogService from "./services/blogs";
 import loginService from "./services/login";
@@ -17,10 +18,6 @@ const App = () => {
   // Login form state
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  // New blog post state
-  const [title, setTitle] = useState("");
-  const [author, setAuthor] = useState("");
-  const [url, setUrl] = useState("");
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem("loggedBlogappUser");
@@ -86,25 +83,15 @@ const App = () => {
     return <LogOutForm handleLogout={handleLogout} />;
   };
 
-  const addBlog = (event) => {
-    event.preventDefault();
+  const blogFormRef = useRef();
 
-    // Create the object
-    const blog = {
-      author,
-      title,
-      url,
-    };
-
+  const submitBlog = (blog) => {
     // Persist to database
     blogService
       .create(blog)
       .then((response) => {
         setBlogs(blogs.concat(response));
-        setAuthor("");
-        setTitle("");
-        setUrl("");
-        showNotification("success", `${title} added successfully`);
+        showNotification("success", `${blog.title} added successfully`);
       })
       .catch((error) => {
         console.error(error);
@@ -113,32 +100,17 @@ const App = () => {
           `Error adding blog post: ${JSON.stringify(error.response.data)}`
         );
       });
-  };
 
-  const handleAuthorChange = (event) => {
-    setAuthor(event.target.value);
-  };
-  const handleTitleChange = (event) => {
-    setTitle(event.target.value);
-  };
-  const handleUrlChange = (event) => {
-    setUrl(event.target.value);
+    // Hide the form
+    blogFormRef.current.toggleVisibility();
   };
 
   const showBlogForm = () => {
     return (
-      <div>
+      <Togglable buttonLabel="New blog" ref={blogFormRef}>
         <h2>Add a new blog</h2>
-        <BlogForm
-          addBlog={addBlog}
-          author={author}
-          title={title}
-          url={url}
-          handleAuthorChange={handleAuthorChange}
-          handleTitleChange={handleTitleChange}
-          handleUrlChange={handleUrlChange}
-        />
-      </div>
+        <BlogForm submitBlog={submitBlog} />
+      </Togglable>
     );
   };
 
