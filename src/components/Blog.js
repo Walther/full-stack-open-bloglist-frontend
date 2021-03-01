@@ -36,7 +36,7 @@ const Blog = ({ blog, deleteHandler, likeHandler, loggedUser }) => {
           like
         </button>
         <br />
-        {loggedUser.id == user && showDeleteButton()}
+        {loggedUser.id === user && showDeleteButton()}
       </>
     );
   };
