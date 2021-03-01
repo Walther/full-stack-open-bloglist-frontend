@@ -56,7 +56,7 @@ const App = () => {
     }
   };
 
-  const handleLogout = async (event) => {
+  const handleLogout = async () => {
     window.localStorage.removeItem("loggedBlogappUser");
     setUser(null);
     setUsername("");
@@ -118,7 +118,7 @@ const App = () => {
     if (window.confirm(`Are you sure you want to delete "${title}"?`)) {
       blogService
         .remove(id)
-        .then((response) => {
+        .then((_response) => {
           // Delete from local view too
           setBlogs(blogs.filter((blog) => blog.id !== id));
           showNotification("success", `"${title}" deleted successfully`);

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const BlogForm = ({ submitBlog, blogFormRef }) => {
+const BlogForm = ({ submitBlog }) => {
   // New blog post state
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
