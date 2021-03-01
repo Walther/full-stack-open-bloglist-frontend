@@ -145,6 +145,7 @@ const App = () => {
               blog={blog}
               deleteHandler={() => deleteHandler(blog.id, blog.title)}
               likeHandler={likeHandler}
+              loggedUser={user}
             />
           ))}
       </>
