@@ -142,10 +142,28 @@ const App = () => {
             key={blog.id}
             blog={blog}
             deleteHandler={() => deleteHandler(blog.id, blog.title)}
+            likeHandler={likeHandler}
           />
         ))}
       </>
     );
+  };
+
+  const likeHandler = ({ id, user, author, title, url, likes }) => {
+    blogService
+      .update(id, { user, author, title, url, likes })
+      .then((response) => {
+        console.log(response);
+        // Update local view too
+        setBlogs(blogs.map((blog) => (blog.id !== id ? blog : response)));
+      })
+      .catch((error) => {
+        console.error(error);
+        showNotification(
+          "error",
+          `Error liking the post: ${JSON.stringify(error.response.data)}`
+        );
+      });
   };
 
   return (

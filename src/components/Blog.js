@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 
 const Blog = ({ blog, deleteHandler, likeHandler }) => {
+  const { id, user, author, title, url, likes } = blog;
+
   const [details, setDetails] = useState(false);
 
   const blogStyles = {
@@ -17,12 +19,18 @@ const Blog = ({ blog, deleteHandler, likeHandler }) => {
     return (
       <>
         <br />
-        <a href={blog.url} rel="noreferrer">
-          {blog.url}
+        <a href={url} rel="noreferrer">
+          {url}
         </a>
         <br />
-        <span style={likeStyles}>{blog.likes}</span>likes
-        <button onClick={likeHandler}>like</button>
+        <span style={likeStyles}>{likes}</span>likes
+        <button
+          onClick={() =>
+            likeHandler({ id, user, author, title, url, likes: likes + 1 })
+          }
+        >
+          like
+        </button>
         <br />
         <button onClick={deleteHandler}>delete</button>
       </>
@@ -31,7 +39,7 @@ const Blog = ({ blog, deleteHandler, likeHandler }) => {
 
   return (
     <div style={blogStyles}>
-      {blog.author}: "{blog.title}"
+      {author}: "{title}"
       <button onClick={() => setDetails(!details)}>
         {details ? "hide" : "view"}
       </button>
