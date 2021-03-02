@@ -97,6 +97,14 @@ describe("Blog app", function () {
           likes: 10,
         });
       });
+
+      it("Blogs are sorted", function () {
+        cy.get(".blogItem").then((blogItems) => {
+          cy.wrap(blogItems[1]).contains("B: B");
+          cy.wrap(blogItems[0]).contains("C: C");
+          cy.wrap(blogItems[2]).contains("A: A");
+        });
+      });
     });
   });
 });
