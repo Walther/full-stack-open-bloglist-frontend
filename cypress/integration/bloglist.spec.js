@@ -62,6 +62,20 @@ describe("Blog app", function () {
       cy.contains("likes");
     });
 
+    it("A blog can be deleted", function () {
+      cy.createBlog({
+        title: "A",
+        author: "A",
+        url: "example.com",
+        likes: 0,
+      });
+      cy.contains("view").click();
+      cy.get("#delete-button").click();
+      cy.on("window:confirm", () => true);
+      cy.get(".success").contains("deleted successfully");
+      cy.contains("A: A").should("not.exist");
+    });
+
     describe("and several blogs exist", function () {
       beforeEach(function () {
         cy.createBlog({

@@ -16,7 +16,9 @@ const Blog = ({ blog, deleteHandler, likeHandler, loggedUser }) => {
   };
 
   const showDeleteButton = () => (
-    <button onClick={deleteHandler}>delete</button>
+    <button id="delete-button" onClick={deleteHandler}>
+      delete
+    </button>
   );
 
   const showDetails = () => {
