@@ -29,6 +29,7 @@ const Blog = ({ blog, deleteHandler, likeHandler, loggedUser }) => {
         <br />
         <span style={likeStyles}>{likes}</span>likes
         <button
+          id="like-button"
           onClick={() =>
             likeHandler({ id, user, author, title, url, likes: likes + 1 })
           }
