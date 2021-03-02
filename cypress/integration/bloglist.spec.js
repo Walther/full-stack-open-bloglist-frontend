@@ -33,4 +33,20 @@ describe("Blog app", function () {
       cy.get(".error").contains("invalid credentials");
     });
   });
+
+  describe("When logged in", function () {
+    beforeEach(function () {
+      cy.login({ username: "testuser", password: "testpassword" });
+    });
+
+    it("A blog can be created", function () {
+      cy.contains("New blog").click();
+      cy.get("#title").type("title");
+      cy.get("#author").type("author");
+      cy.get("#url").type("url");
+      cy.contains("save").click();
+      cy.get(".success").contains("added successfully");
+      cy.contains("author: title");
+    });
+  });
 });
